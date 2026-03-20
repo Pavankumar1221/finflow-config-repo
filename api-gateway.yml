@@ -1,0 +1,50 @@
+# File: api-gateway.yml (in GitHub config repo root)
+
+server:
+  port: 7003
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/**
+
+        - id: application-service
+          uri: lb://application-service
+          predicates:
+            - Path=/applications/**
+          filters:
+            - name: AuthenticationFilter
+
+        - id: document-service
+          uri: lb://document-service
+          predicates:
+            - Path=/documents/**
+          filters:
+            - name: AuthenticationFilter
+
+        - id: admin-service
+          uri: lb://admin-service
+          predicates:
+            - Path=/admin/**
+          filters:
+            - name: AuthenticationFilter
+
+jwt:
+  secret: finflow_super_secret_key_256_bits_long_for_HS256_2026
+  expiration: 86400000
+
+info:
+  app:
+    name: FinFlow API Gateway
+    description: Central entry point, JWT validation and routing
+    version: 1.0.0
