@@ -9,7 +9,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/finflow_application?useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true
     username: pavan
-    password: root@1234
+    password: Pavan@1234
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       maximum-pool-size: 10
